@@ -1,39 +1,37 @@
-function partyList(input) {
-    let guests = {
-        regular: [],
-        vip: []
-    };
+function partyTime(input){
+    let list = [];
 
-    let commandIndex = input.indexOf("PARTY");
-    let reservations = input.slice(0, commandIndex);
+    while(input[0] != 'PARTY'){
+        list.push(input.shift());
+    }
+    input.shift();
 
-    for (let reservation of reservations) {
-        let isVip = /^\d/.test(reservation);
-        if (isVip) {
-            guests.vip.push(reservation);
-        } else {
-            guests.regular.push(reservation);
+    for(let name of input){
+        let index = list .indexOf(name);
+
+        if(index != -1){
+            list.splice(index, 1); 
         }
     }
+    let vipGuest = [];
+    let guest = [];
 
-    let partyGuests = input.slice(commandIndex + 1);
-
-    for (let guest of partyGuests) {
-        let isVip = /^\d/.test(guest);
-        if (isVip) {
-            guests.vip = guests.vip.filter(vip => vip !== guest);
+    for(let name of list){
+        if(name.charCodeAt(0) >= 48 && name.charCodeAt(0) <= 57){
+            vipGuest.push(name);
         } else {
-            guests.regular = guests.regular.filter(regular => regular !== guest);
+            guest.push(name);
         }
     }
-
-    let totalGuests = guests.vip.length + guests.regular.length;
-
-    console.log(totalGuests);
-    console.log(guests.vip.join('\n'));
-    console.log(guests.regular.join('\n'));
+    console.log(list.length);
+    if(vipGuest.length > 0){
+        console.log(vipGuest.join('\n'));
+    } 
+    if(guest.length > 0){
+        console.log(guest.join('\n'));
+    }
 }
-partyList([
+partyTime([
     '7IK9Yo0h',
     '9NoBUajQ',
     'Ce8vwPmE',
@@ -45,7 +43,7 @@ partyList([
     'SVQXQCbc'
 ]);
 
-// partyList([
+// partyTime([
 //     'm8rfQBvl', 
 //     'fc1oZCE0', 
 //     'UgffRkOn', 
